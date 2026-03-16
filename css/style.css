@@ -1,0 +1,380 @@
+/* ===== 全局重置与背景设置 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+}
+
+/* ===== 容器 ===== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* ===== 半透明卡片 ===== */
+.card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 550px;
+    margin: auto 0;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1e293b;
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
+    margin-bottom: 30px;
+    letter-spacing: -0.02em;
+}
+
+/* ===== 按钮组 ===== */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+/* 基础按钮样式 — 液态玻璃效果 */
+.btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 60px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border: none;
+    overflow: hidden;           /* 确保涟漪和预览不溢出 */
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);  /* 背景模糊强化玻璃感 */
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* 按钮颜色半透明，呈现透视效果 */
+.btn-red {
+    background-color: rgba(229, 62, 62, 0.65);
+}
+.btn-blue {
+    background-color: rgba(49, 130, 206, 0.65);
+}
+.btn-green {
+    background-color: rgba(56, 161, 105, 0.65);
+}
+.btn-yellow {
+    background-color: rgba(250, 204, 21, 0.65);
+}
+.btn-purple {
+    background-color: rgba(128, 90, 213, 0.65);
+}
+
+/* 光泽层 — 模拟玻璃反光 */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.btn:hover {
+    filter: brightness(1.05);
+    transform: scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), inset 0 1px 3px rgba(255,255,255,0.5);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* 按钮文字始终在上层 */
+.btn span {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+}
+
+/* ===== 点击涟漪动画 ===== */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+    z-index: 1;                  /* 位于文字之下，光泽层之上？实际在光泽层上，但文字z-index更高 */
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+
+@keyframes ripple-animation {
+    from {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    to {
+        transform: scale(6);
+        opacity: 0;
+    }
+}
+
+
+
+/* ===== 底部透明文字 ===== */
+.site-footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    text-align: center;
+    width: 100%;
+    letter-spacing: 1px;
+    backdrop-filter: blur(1px);
+}
+/* ===== about.html 专用样式 ===== */
+.about-page .container {
+    /* 可以微调整体间距 */
+    gap: 30px;
+}
+
+.about-page .card {
+    max-width: 900px;               /* 加宽卡片，适应更多内容 */
+    padding: 40px 50px;
+    width: 100%;
+    margin-bottom: 20px;            /* 卡片之间的间距 */
+}
+/* about.html 卡片取消透明效果（纯白不透明） */
+.about-page .card {
+    background: #ffffff;            /* 纯白背景 */
+    backdrop-filter: none;          /* 移除高斯模糊 */
+    -webkit-backdrop-filter: none;
+    /* 保留原有的圆角、阴影和边框，可根据需要微调边框颜色 */
+    border: 1px solid rgba(0, 0, 0, 0.1);  /* 可选：将边框改为浅灰色，更自然 */
+}
+
+/* 卡片标题（复用引导页标题样式，但降级为 h2） */
+.about-page .card-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1e293b;
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
+    margin-bottom: 30px;
+    letter-spacing: -0.02em;
+    text-align: left;               /* 左对齐更自然，可自行调整 */
+}
+
+/* 特色网格：上二下二 */
+.about-page .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 10px;
+}
+
+/* 每个小卡片的样式（与主卡片风格一致，但更小） */
+.about-page .feature-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 24px;
+    padding: 24px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.about-page .feature-card:hover {
+    transform: translateY(-4px);
+}
+
+.about-page .feature-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+}
+
+/* 小卡片内容区域（供用户填写） */
+.about-page .feature-content {
+    min-height: 60px;               /* 预留填写空间，用户可删除此样式 */
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+/* 简介卡片和团队卡片的通用内容区域 */
+.about-page .card-content {
+    color: #2d3748;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+/* ===== about.html 返回链接样式 ===== */
+.site-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.back-link {
+    color: inherit;                 /* 继承父级半透明白色 */
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+}
+
+.back-link:hover {
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+.separator {
+    opacity: 0.5;
+    user-select: none;
+}
+
+/* 移动端适配：较小屏幕时允许换行 */
+@media (max-width: 480px) {
+    .site-footer {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .separator {
+        display: none;               /* 分隔符在换行时隐藏 */
+    }
+}
+/* ===== 全屏视频背景 ===== */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;               /* 置于所有内容下方 */
+    object-fit: cover;         /* 覆盖整个视口，可能裁剪部分画面 */
+    background-color: #0c25975d; /* 视频加载失败时纯色背景 */
+}
+/* ===== 卡片入场动画 ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 所有卡片应用动画 */
+.card {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* about 页面三个卡片错开延迟 */
+.about-page .card:nth-child(1) {
+    animation-delay: 0s;
+}
+.about-page .card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.about-page .card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+/* ===== sponsor.html 专用样式 ===== */
+.sponsor-page .card {
+    /* 复用玻璃半透明效果（与index卡片一致） */
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* 保持最大宽度与about卡片一致 */
+    max-width: 900px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* 卡片标题（与about共用样式，但可微调） */
+.sponsor-page .card-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1e293b;
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.6);
+    margin-bottom: 30px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+/* 二维码区域 */
+.sponsor-page .qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.sponsor-page .qr-image {
+    max-width: 250px;        /* 限制二维码大小 */
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sponsor-page .qr-caption {
+    text-align: center;
+    color: #2d3748;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.sponsor-page .card-content {
+    color: #2d3748;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+.sponsor-page .card:nth-child(1) { animation-delay: 0s; }
+.sponsor-page .card:nth-child(2) { animation-delay: 0.1s; }
+.sponsor-page .card:nth-child(3) { animation-delay: 0.2s; }
